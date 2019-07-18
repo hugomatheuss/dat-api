@@ -5,8 +5,7 @@ var Author = require('./author');
 router.post('/', (req, res) => {
     console.log(req.body);
     let a = new Author({ 
-        name: req.body.name,
-        books: req.body.books
+        name: req.body.name        
     });
     a.save((err, author) => {
         if(err)
@@ -43,7 +42,6 @@ router.patch('/:id', (req, res) => {
             res.status(404).send({});
         else {
             author.name = req.body.name;
-            author.books = req.body.books;
             author.save()
                 .then((a) => res.status(200).send(a))
                 .catch((e) => res.status(500).send(e));
