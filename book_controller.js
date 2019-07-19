@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var Book = require('./book');
+const mongoose = require('mongoose'); 
+
+const Author = mongoose.model('Author');
 
 router.post('/', (req, res) => {
-    console.log(req.body);
+    const author = Author.findById(req.author);
+    //console.log(req.body);
+    console.log(author);  
     let b = new Book({ 
         title: req.body.title,
         author: req.body.author,
@@ -11,8 +16,10 @@ router.post('/', (req, res) => {
     b.save((err, book) => {
         if(err)
             res.status(500).send(err);
-        else
-            res.status(200).send(book);
+        else {
+            res.status(200).json(book);
+        
+        }
     })
 })
 
